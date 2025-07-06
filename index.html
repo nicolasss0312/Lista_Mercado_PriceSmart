@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🛒 Lista de Mercado</title>
+    <title>🛒 Lista de Mercado Pro</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -13,20 +16,23 @@
 
         <div class="form-group">
             <label for="producto">Producto:</label>
-            <input type="text" id="producto" placeholder="Ej: Manzanas">
+            <input type="text" id="producto" placeholder="Ej: Aguacates">
         </div>
 
         <div class="form-group">
             <label for="precio">Precio (COP):</label>
-            <input type="number" id="precio" placeholder="Ej: 5000">
+            <input type="text" id="precio" inputmode="numeric" placeholder="Ej: 8.000">
         </div>
 
         <button id="btn-agregar">Agregar Producto</button>
 
-        <h2>Productos a Comprar</h2>
+        <div class="summary">
+             <h2>Productos: <span id="contador-productos">0</span></h2>
+             <h2>Total: <span id="total">$0</span></h2>
+        </div>
+       
         <ul id="lista-productos">
             </ul>
-        <p>Total: <span id="total"></span></p>
     </div>
 
     <script src="app.js"></script>
