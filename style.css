@@ -16,40 +16,46 @@ body {
 .container {
     position: relative;
     padding: 2.5em;
-    background: #1a1a1a;
-    border-radius: 16px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    background: #1a1a1a; /* fondo interno sólido */
+    border-radius: 20px;
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     z-index: 1;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-    overflow: hidden; /* ⛔️ Clave para prevenir expansión del glow */
+    overflow: hidden;
 }
 
-.container::before {
-    content: "";
+/* Capa de fondo RGB glow */
+.container::after {
+    content: '';
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
     z-index: -1;
-    border-radius: inherit;
-    background: linear-gradient(135deg,
-        #ff00ff,
-        #0000ff,
-        #00ffff,
-        #00ff00,
-        #ffff00,
-        #ff0000,
-        #ff00ff
+    border-radius: 24px; /* un poco más que el container para que se note el borde */
+    background: conic-gradient(
+        from 0deg,
+        #ff0000, #ff7f00, #ffff00, #00ff00,
+        #00ffff, #0000ff, #8b00ff, #ff0000
     );
     background-size: 300% 300%;
-    animation: borderRGB 10s ease infinite;
-    filter: blur(12px);
-    pointer-events: none; /* Evita interferencias táctiles */
+    animation: pulseGlow 6s ease infinite;
+    filter: blur(20px);
+    opacity: 0.8;
 }
+
+/* El borde real, pero no invasivo */
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: #1a1a1a; /* mismo fondo que el container */
+    z-index: 0;
+}
+
 
 
 
