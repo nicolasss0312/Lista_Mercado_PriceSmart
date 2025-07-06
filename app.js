@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- SELECCIÓN DE ELEMENTOS ---
     const productoInput = document.getElementById('producto');
     const precioInput = document.getElementById('precio');
     const agregarBtn = document.getElementById('btn-agregar');
@@ -7,23 +8,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalSpan = document.getElementById('total');
     const contadorSpan = document.getElementById('contador-productos');
 
+    // --- VARIABLES GLOBALES ---
     let total = 0;
     let contadorProductos = 0;
+    const formatoMoneda = {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    };
 
-    // --- FUNCIÓN PARA FORMATEAR EL PRECIO MIENTRAS SE ESCRIBE ---
+    // --- FUNCIÓN PARA ACTUALIZAR LOS TOTALES EN PANTALLA ---
+    function actualizarTotales() {
+        contadorSpan.textContent = contadorProductos;
+        totalSpan.textContent = new Intl.NumberFormat('es-CO', formatoMoneda).format(total);
+    }
+
+    // --- EVENTO PARA FORMATEAR EL PRECIO MIENTRAS SE ESCRIBE ---
     precioInput.addEventListener('input', (e) => {
-        let value = e.target.value;
-        // 1. Quitar cualquier caracter que no sea un dígito
-        value = value.replace(/\D/g, '');
-        // 2. Formatear con puntos de mil
-        value = new Intl.NumberFormat('es-CO').format(value);
-        // 3. Actualizar el valor del input, si está vacío no pone nada
-        e.target.value = value === '0' ? '' : value;
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value ? new Intl.NumberFormat('es-CO').format(value) : '';
     });
 
+    // --- EVENTO PARA AGREGAR PRODUCTO ---
     agregarBtn.addEventListener('click', () => {
         const producto = productoInput.value.trim();
-        // Obtener el precio y quitarle los puntos para poder convertirlo a número
         const precioString = precioInput.value.replace(/\./g, '');
         const precio = parseFloat(precioString);
 
@@ -32,33 +41,47 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- ACTUALIZAR CONTADOR Y TOTAL ---
         contadorProductos++;
         total += precio;
 
-        // --- FORMATEAR VALORES PARA MOSTRAR ---
-        const formatoMoneda = {
-            style: 'currency',
-            currency: 'COP',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-        };
         const precioFormateado = new Intl.NumberFormat('es-CO', formatoMoneda).format(precio);
-        const totalFormateado = new Intl.NumberFormat('es-CO', formatoMoneda).format(total);
 
-        // --- CREAR Y AGREGAR EL NUEVO ELEMENTO A LA LISTA ---
         const nuevoItem = document.createElement('li');
-        // Usamos spans para poder darles estilos diferentes si se necesita
-        nuevoItem.innerHTML = `<span class="product-name">${producto}</span> <span class="product-price">${precioFormateado}</span>`;
+        // Guardamos el precio numérico en un 'data attribute' para poderlo recuperar al borrar
+        nuevoItem.dataset.price = precio;
+        nuevoItem.innerHTML = `
+            <span class="product-name">${producto}</span>
+            <span class="product-price">${precioFormateado}</span>
+            <button class="delete-btn">❌</button>
+        `;
         listaProductos.appendChild(nuevoItem);
 
-        // --- ACTUALIZAR VISUALES ---
-        contadorSpan.textContent = contadorProductos;
-        totalSpan.textContent = totalFormateado;
+        actualizarTotales();
 
-        // Limpiar los campos
         productoInput.value = '';
         precioInput.value = '';
         productoInput.focus();
+    });
+
+    // --- EVENTO PARA ELIMINAR PRODUCTO (USANDO DELEGACIÓN DE EVENTOS) ---
+    listaProductos.addEventListener('click', (e) => {
+        // Si el elemento clickeado es un botón de eliminar
+        if (e.target.classList.contains('delete-btn')) {
+            const itemParaEliminar = e.target.parentElement;
+            const precioItem = parseFloat(itemParaEliminar.dataset.price);
+
+            // Actualizar totales
+            total -= precioItem;
+            contadorProductos--;
+            actualizarTotales();
+
+            // Añadir clase para la animación de salida
+            itemParaEliminar.classList.add('fade-out');
+
+            // Esperar que la animación termine para borrar el elemento del DOM
+            setTimeout(() => {
+                itemParaEliminar.remove();
+            }, 500); // 500ms, igual que la duración de la animación
+        }
     });
 });

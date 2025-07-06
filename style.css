@@ -1,54 +1,75 @@
 /* Importar una fuente moderna */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #111; /* Fondo oscuro para resaltar el efecto */
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinea al inicio para pantallas largas */
+    align-items: center;
     min-height: 100vh;
     padding: 2em 1em;
     box-sizing: border-box;
 }
 
+/* --- El truco del borde animado --- */
 .container {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
+    background-color: #1a1a1a;
+    color: #f1f1f1;
     padding: 2.5em;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     width: 100%;
     max-width: 500px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative; /* Necesario para el pseudo-elemento */
+    overflow: hidden; /* Oculta lo que se sale del borde */
+    z-index: 1;
 }
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%; /* Más grande para que la rotación sea suave en las esquinas */
+    height: 150%;
+    background: conic-gradient(
+        #ff0000, #ff7f00, #ffff00, #00ff00, 
+        #0000ff, #4b0082, #8b00ff, #ff0000
+    );
+    z-index: -1;
+    animation: rotate 4s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+/* --- Fin del borde animado --- */
+
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #fff;
     margin-bottom: 1.5em;
-    font-weight: 600;
-}
-
-.form-group {
-    margin-bottom: 1.5em;
-    position: relative;
+    font-weight: 700;
 }
 
 label {
-    display: block;
-    margin-bottom: 0.5em;
     font-weight: 600;
-    color: #555;
+    color: #aaa;
 }
 
 input {
+    background-color: #2a2a2a;
+    color: #f1f1f1;
+    border: 1px solid #444;
+    border-radius: 12px;
     width: 100%;
     padding: 1em;
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 12px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -56,30 +77,27 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #764ba2;
-    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+    border-color: #8b00ff;
+    box-shadow: 0 0 0 3px rgba(139, 0, 255, 0.3);
 }
 
-button {
+button#btn-agregar {
     width: 100%;
     padding: 1em;
-    background: #764ba2;
+    background: linear-gradient(90deg, #8b00ff, #4b0082);
     color: white;
     border: none;
     border-radius: 12px;
     font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 1.5em;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-button:hover {
-    background-color: #663a92;
+button#btn-agregar:hover {
     transform: translateY(-3px);
-}
-
-button:active {
-    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
 }
 
 .summary {
@@ -87,18 +105,9 @@ button:active {
     justify-content: space-between;
     padding: 1em 0.5em;
     margin-top: 1.5em;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-
-.summary h2 {
-    font-size: 1.1em;
-    color: #333;
-    font-weight: 600;
-}
-
-.summary span {
-    color: #764ba2;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    color: #f1f1f1;
 }
 
 ul {
@@ -108,16 +117,14 @@ ul {
 }
 
 li {
-    background-color: #f8f9fa;
-    padding: 1em 1.5em;
+    background-color: #2a2a2a;
+    padding: 1em;
     margin-bottom: 0.8em;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #e9ecef;
-    font-weight: 500;
-    /* Animación de entrada */
+    border-left: 5px solid #8b00ff;
     animation: fadeIn 0.5s ease;
 }
 
@@ -127,18 +134,37 @@ li {
 
 .product-price {
     font-weight: 600;
-    color: #007bff;
-    margin-left: 1em;
+    color: #4dc3ff; /* Un color que contrasta bien */
+    margin: 0 1em;
 }
 
-/* Animación Keyframes */
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: #ff4d4d;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.2em 0.5em;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: rgba(255, 77, 77, 0.2);
+    transform: scale(1.1);
+}
+
+/* Animación para eliminar item */
+li.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(20px); }
 }
