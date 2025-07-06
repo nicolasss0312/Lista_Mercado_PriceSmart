@@ -38,21 +38,29 @@ body {
 .container::before {
     content: '';
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: -1;
-    margin: -3px;
-    border-radius: inherit;
+    padding: 3px; /* Simula el borde */
     background: conic-gradient(
         from 0deg,
         #ff0000, #ff7f00, #ffff00, #00ff00,
         #0000ff, #4b0082, #8b00ff, #ff0000
     );
-    /* ❌ Elimina esta línea si no quieres rotación */
-    /* animation: rotate 4s linear infinite; */
-
-    filter: blur(15px); /* Glow */
-    opacity: 0.8;
+    border-radius: inherit;
+    filter: blur(4px); /* Glow más fino */
+    mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
 }
+
 
 
 
