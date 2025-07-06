@@ -14,51 +14,38 @@ body {
 
 /* --- SECCIÓN CLAVE DEL BORDE (ACTUALIZADA) --- */
 .container {
-    /* 1. El color de fondo sólido para el interior del recuadro */
-    background: #1a1a1a; 
-    color: #f1f1f1;
-    padding: 2.5em;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    width: 100%;
-    max-width: 500px;
     position: relative;
-    z-index: 1;
-
-    /* 2. Se crea un borde transparente que definirá el grosor del efecto RGB */
-    border: 3px solid transparent;
-
-    /* 3. La magia: El fondo sólido (#1a1a1a) solo se dibujará hasta el borde interior (padding),
-       dejando el área del borde transparente para que se vea lo que hay detrás. */
+    padding: 2.5em;
+    background: #1a1a1a; /* Fondo interior sólido */
+    border-radius: 16px;
+    border: 2px solid transparent;
     background-clip: padding-box;
-
-    box-shadow: 0 0 20px rgba(255,255,255,0.05); /* suave sombra base */
+    width: 100%;
+    max-width: 600px;
+    z-index: 1;
 }
 
 .container::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
     z-index: -1;
-    padding: 3px; /* Simula el borde */
-    background: conic-gradient(
-        from 0deg,
-        #ff0000, #ff7f00, #ffff00, #00ff00,
-        #0000ff, #4b0082, #8b00ff, #ff0000
-    );
     border-radius: inherit;
-    filter: blur(4px); /* Glow más fino */
-    mask: 
-      linear-gradient(#000 0 0) content-box, 
-      linear-gradient(#000 0 0);
-    -webkit-mask: 
-      linear-gradient(#000 0 0) content-box, 
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: destination-out;
+    background: linear-gradient(135deg,
+        #ff00ff,
+        #0000ff,
+        #00ffff,
+        #00ff00,
+        #ffff00,
+        #ff0000,
+        #ff00ff
+    );
+    background-size: 300% 300%;
+    animation: borderRGB 10s ease infinite;
+    filter: blur(20px); /* El glow hacia afuera */
 }
 
 
@@ -176,4 +163,10 @@ li.fade-out {
 @keyframes fadeOut {
     from { opacity: 1; transform: translateX(0); }
     to { opacity: 0; transform: translateX(20px); }
+}
+
+@keyframes borderRGB {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
