@@ -1,11 +1,9 @@
-/* Importar una fuente moderna */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Se restaura el fondo degradado original */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    color: #333; /* Color de texto oscuro para que contraste con el fondo claro */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -15,8 +13,7 @@ body {
 }
 
 .container {
-    /* Se restaura el fondo blanco semi-transparente */
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo claro y casi opaco */
     backdrop-filter: blur(10px);
     padding: 2.5em;
     border-radius: 20px;
@@ -28,21 +25,16 @@ body {
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #333; /* Título oscuro */
     margin-bottom: 1.5em;
     font-weight: 600;
-}
-
-.form-group {
-    margin-bottom: 1.5em;
-    position: relative;
 }
 
 label {
     display: block;
     margin-bottom: 0.5em;
     font-weight: 600;
-    color: #555;
+    color: #555; /* Etiquetas oscuras */
 }
 
 input {
@@ -53,6 +45,8 @@ input {
     border-radius: 12px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
+    color: #333; /* Texto del input oscuro */
+    background-color: #fff; /* Fondo del input blanco */
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -72,6 +66,7 @@ button#btn-agregar {
     font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 1em;
     transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -91,7 +86,7 @@ button#btn-agregar:hover {
 
 .summary h2 {
     font-size: 1.1em;
-    color: #333;
+    color: #333; /* Texto del resumen oscuro */
     font-weight: 600;
 }
 
@@ -107,6 +102,7 @@ ul {
 
 li {
     background-color: #f8f9fa;
+    color: #333; /* Texto de la lista oscuro */
     padding: 1em;
     margin-bottom: 0.8em;
     border-radius: 12px;
@@ -128,7 +124,6 @@ li {
     margin: 0 1em;
 }
 
-/* Estilos conservados para el botón de eliminar */
 .delete-btn {
     background: transparent;
     border: none;
@@ -145,7 +140,6 @@ li {
     transform: scale(1.1);
 }
 
-/* Animaciones conservadas para añadir y eliminar items */
 li.fade-out {
     animation: fadeOut 0.5s ease forwards;
 }
