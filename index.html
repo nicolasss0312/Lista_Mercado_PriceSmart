@@ -16,12 +16,17 @@
 
         <div class="form-group">
             <label for="producto">Producto:</label>
-            <input type="text" id="producto" placeholder="Ej: Aguacates">
+            <input type="text" id="producto" placeholder="Ej: Jamón">
         </div>
 
         <div class="form-group">
-            <label for="precio">Precio (COP):</label>
-            <input type="text" id="precio" inputmode="numeric" placeholder="Ej: 8.000">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" value="1" min="1">
+        </div>
+
+        <div class="form-group">
+            <label for="precio">Precio por unidad (COP):</label>
+            <input type="text" id="precio" inputmode="numeric" placeholder="Ej: 5.000">
         </div>
 
         <button id="btn-agregar">Agregar Producto</button>

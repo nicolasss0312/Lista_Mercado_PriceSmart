@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- SELECCIÓN DE ELEMENTOS ---
     const productoInput = document.getElementById('producto');
+    const cantidadInput = document.getElementById('cantidad'); // Nuevo elemento
     const precioInput = document.getElementById('precio');
     const agregarBtn = document.getElementById('btn-agregar');
     const listaProductos = document.getElementById('lista-productos');
     const totalSpan = document.getElementById('total');
     const contadorSpan = document.getElementById('contador-productos');
 
-    // --- VARIABLES GLOBALES ---
+    // --- VARIABLES Y FORMATOS ---
     let total = 0;
     let contadorProductos = 0;
     const formatoMoneda = {
@@ -18,70 +19,79 @@ document.addEventListener('DOMContentLoaded', () => {
         maximumFractionDigits: 0
     };
 
-    // --- FUNCIÓN PARA ACTUALIZAR LOS TOTALES EN PANTALLA ---
     function actualizarTotales() {
         contadorSpan.textContent = contadorProductos;
         totalSpan.textContent = new Intl.NumberFormat('es-CO', formatoMoneda).format(total);
     }
 
-    // --- EVENTO PARA FORMATEAR EL PRECIO MIENTRAS SE ESCRIBE ---
     precioInput.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         e.target.value = value ? new Intl.NumberFormat('es-CO').format(value) : '';
     });
 
-    // --- EVENTO PARA AGREGAR PRODUCTO ---
+    // --- LÓGICA PRINCIPAL AL AGREGAR ---
     agregarBtn.addEventListener('click', () => {
         const producto = productoInput.value.trim();
+        const cantidad = parseInt(cantidadInput.value, 10); // Obtener cantidad
         const precioString = precioInput.value.replace(/\./g, '');
         const precio = parseFloat(precioString);
 
-        if (producto === '' || isNaN(precio) || precio <= 0) {
-            alert('Por favor, ingresa un producto y un precio válido.');
+        // Validación mejorada
+        if (producto === '' || isNaN(precio) || precio <= 0 || isNaN(cantidad) || cantidad <= 0) {
+            alert('Por favor, ingresa un producto, cantidad y precio válidos.');
             return;
         }
+        
+        // --- CÁLCULOS ACTUALIZADOS ---
+        const precioTotalItem = precio * cantidad; // Multiplicar precio por cantidad
+        
+        contadorProductos += cantidad; // El contador ahora suma la cantidad de unidades
+        total += precioTotalItem; // El total general suma el precio total del item
 
-        contadorProductos++;
-        total += precio;
+        const precioTotalItemFormateado = new Intl.NumberFormat('es-CO', formatoMoneda).format(precioTotalItem);
 
-        const precioFormateado = new Intl.NumberFormat('es-CO', formatoMoneda).format(precio);
-
+        // --- CREAR Y AGREGAR EL NUEVO ELEMENTO A LA LISTA ---
         const nuevoItem = document.createElement('li');
-        // Guardamos el precio numérico en un 'data attribute' para poderlo recuperar al borrar
-        nuevoItem.dataset.price = precio;
+        // Guardamos el precio total del item (precio x cantidad) para que el botón de eliminar funcione bien
+        nuevoItem.dataset.price = precioTotalItem;
+        // Guardamos también la cantidad para poderla restar del contador al eliminar
+        nuevoItem.dataset.quantity = cantidad;
+        
+        // Se añade la cantidad a la descripción del producto
         nuevoItem.innerHTML = `
+            <span class="product-quantity">(${cantidad}x)</span>
             <span class="product-name">${producto}</span>
-            <span class="product-price">${precioFormateado}</span>
+            <span class="product-price">${precioTotalItemFormateado}</span>
             <button class="delete-btn">❌</button>
         `;
         listaProductos.appendChild(nuevoItem);
 
         actualizarTotales();
 
+        // Limpiar campos y resetear cantidad a 1
         productoInput.value = '';
         precioInput.value = '';
+        cantidadInput.value = 1; 
         productoInput.focus();
     });
 
-    // --- EVENTO PARA ELIMINAR PRODUCTO (USANDO DELEGACIÓN DE EVENTOS) ---
+    // --- LÓGICA DE ELIMINACIÓN ACTUALIZADA ---
     listaProductos.addEventListener('click', (e) => {
-        // Si el elemento clickeado es un botón de eliminar
         if (e.target.classList.contains('delete-btn')) {
             const itemParaEliminar = e.target.parentElement;
             const precioItem = parseFloat(itemParaEliminar.dataset.price);
+            const cantidadItem = parseInt(itemParaEliminar.dataset.quantity, 10);
 
-            // Actualizar totales
+            // Actualizar totales restando los valores guardados
             total -= precioItem;
-            contadorProductos--;
+            contadorProductos -= cantidadItem;
             actualizarTotales();
 
-            // Añadir clase para la animación de salida
             itemParaEliminar.classList.add('fade-out');
 
-            // Esperar que la animación termine para borrar el elemento del DOM
             setTimeout(() => {
                 itemParaEliminar.remove();
-            }, 500); // 500ms, igual que la duración de la animación
+            }, 500);
         }
     });
 });

@@ -116,6 +116,14 @@ li {
 
 .product-name {
     flex-grow: 1;
+    margin-left: 0.5em; /* Añadido para separar del (2x) */
+}
+
+/* ESTILO NUEVO */
+.product-quantity {
+    font-weight: 600;
+    color: #888; /* Un color gris para no quitar protagonismo */
+    font-style: italic;
 }
 
 .product-price {
