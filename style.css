@@ -3,7 +3,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333; /* Color de texto oscuro para que contraste con el fondo claro */
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -13,7 +13,7 @@ body {
 }
 
 .container {
-    background-color: rgba(255, 255, 255, 0.95); /* Fondo claro y casi opaco */
+    background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     padding: 2.5em;
     border-radius: 20px;
@@ -25,19 +25,25 @@ body {
 
 h1 {
     text-align: center;
-    color: #333; /* Título oscuro */
+    color: #333;
     margin-bottom: 1.5em;
     font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5em;
 }
 
 label {
     display: block;
     margin-bottom: 0.5em;
     font-weight: 600;
-    color: #555; /* Etiquetas oscuras */
+    color: #555;
 }
 
-input {
+input[type="text"],
+input[type="number"],
+input[type="file"] {
     width: 100%;
     padding: 1em;
     box-sizing: border-box;
@@ -45,9 +51,13 @@ input {
     border-radius: 12px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
-    color: #333; /* Texto del input oscuro */
-    background-color: #fff; /* Fondo del input blanco */
+    color: #333;
+    background-color: #fff;
     transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input[type="file"] {
+    padding: 0.8em;
 }
 
 input:focus {
@@ -86,7 +96,7 @@ button#btn-agregar:hover {
 
 .summary h2 {
     font-size: 1.1em;
-    color: #333; /* Texto del resumen oscuro */
+    color: #333;
     font-weight: 600;
 }
 
@@ -102,34 +112,57 @@ ul {
 
 li {
     background-color: #f8f9fa;
-    color: #333; /* Texto de la lista oscuro */
+    color: #333;
     padding: 1em;
     margin-bottom: 0.8em;
     border-radius: 12px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border: 1px solid #e9ecef;
     font-weight: 500;
     animation: fadeIn 0.5s ease;
 }
 
-.product-name {
-    flex-grow: 1;
-    margin-left: 0.5em; /* Añadido para separar del (2x) */
+.product-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 15px;
+    flex-shrink: 0;
 }
 
-/* ESTILO NUEVO */
-.product-quantity {
+.product-info {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.product-name {
     font-weight: 600;
-    color: #888; /* Un color gris para no quitar protagonismo */
-    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-quantity {
+    font-size: 0.9em;
+    color: #666;
 }
 
 .product-price {
     font-weight: 600;
     color: #007bff;
-    margin: 0 1em;
+    margin-left: 1em;
+    white-space: nowrap;
 }
 
 .delete-btn {
@@ -140,6 +173,7 @@ li {
     cursor: pointer;
     padding: 0.2em 0.5em;
     border-radius: 5px;
+    margin-left: 10px;
     transition: background-color 0.3s, transform 0.2s;
 }
 
@@ -153,11 +187,23 @@ li.fade-out {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeOut {
-    from { opacity: 1; transform: translateX(0); }
-    to { opacity: 0; transform: translateX(20px); }
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
 }

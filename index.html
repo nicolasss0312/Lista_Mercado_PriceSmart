@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🛒 Lista de Mercado Pro</title>
-    <link rel="stylesheet" href="style.css">
+    <title>🛒 Lista de Mercado</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <h1>Lista PriceSmart</h1>
+        <h1>Mi Lista de Mercado</h1>
 
         <div class="form-group">
             <label for="producto">Producto:</label>
@@ -27,6 +28,11 @@
         <div class="form-group">
             <label for="precio">Precio por unidad (COP):</label>
             <input type="text" id="precio" inputmode="numeric" placeholder="Ej: 5.000">
+        </div>
+        
+        <div class="form-group">
+            <label for="foto">Foto del producto (opcional):</label>
+            <input type="file" id="foto" accept="image/*">
         </div>
 
         <button id="btn-agregar">Agregar Producto</button>
