@@ -31,38 +31,30 @@ body {
     /* 3. La magia: El fondo sólido (#1a1a1a) solo se dibujará hasta el borde interior (padding),
        dejando el área del borde transparente para que se vea lo que hay detrás. */
     background-clip: padding-box;
+
+    box-shadow: 0 0 20px rgba(255,255,255,0.05); /* suave sombra base */
 }
 
 .container::before {
     content: '';
     position: absolute;
-    /* 4. El pseudo-elemento se ajusta exactamente al tamaño del contenedor (incluyendo el borde) */
-    top: 0; right: 0; bottom: 0; left: 0; 
-    z-index: -1; /* Se coloca detrás del contenedor */
-    margin: -3px; /* Se expande justo el tamaño del borde para evitar líneas finas */
-    border-radius: inherit; /* Hereda los bordes redondeados */
-
-    /* 5. El gradiente animado que se verá a través del borde transparente */
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: inherit;
     background: conic-gradient(
-        from 0deg, 
-        #ff0000, #ff7f00, #ffff00, #00ff00, 
+        from 0deg,
+        #ff0000, #ff7f00, #ffff00, #00ff00,
         #0000ff, #4b0082, #8b00ff, #ff0000
     );
     animation: rotate 4s linear infinite;
+    filter: blur(15px); /* Esto crea el efecto de glow */
+    opacity: 0.8; /* Ajusta según intensidad deseada */
 }
 
-/* No olvides la animación */
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
+
 /* --- FIN DE LA SECCIÓN DEL BORDE --- */
 
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
 
 h1 {
     text-align: center;
