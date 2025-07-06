@@ -1,9 +1,8 @@
-/* Importar una fuente moderna */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #111; /* Fondo oscuro para resaltar el efecto */
+    background: #111;
     color: #333;
     display: flex;
     justify-content: center;
@@ -13,42 +12,51 @@ body {
     box-sizing: border-box;
 }
 
-/* --- El truco del borde animado --- */
+/* --- SECCIÓN CLAVE DEL BORDE (ACTUALIZADA) --- */
 .container {
-    background-color: #1a1a1a;
+    /* 1. El color de fondo sólido para el interior del recuadro */
+    background: #1a1a1a; 
     color: #f1f1f1;
     padding: 2.5em;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     width: 100%;
     max-width: 500px;
-    position: relative; /* Necesario para el pseudo-elemento */
-    overflow: hidden; /* Oculta lo que se sale del borde */
+    position: relative;
     z-index: 1;
+
+    /* 2. Se crea un borde transparente que definirá el grosor del efecto RGB */
+    border: 3px solid transparent;
+
+    /* 3. La magia: El fondo sólido (#1a1a1a) solo se dibujará hasta el borde interior (padding),
+       dejando el área del borde transparente para que se vea lo que hay detrás. */
+    background-clip: padding-box;
 }
 
 .container::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150%; /* Más grande para que la rotación sea suave en las esquinas */
-    height: 150%;
+    /* 4. El pseudo-elemento se ajusta exactamente al tamaño del contenedor (incluyendo el borde) */
+    top: 0; right: 0; bottom: 0; left: 0; 
+    z-index: -1; /* Se coloca detrás del contenedor */
+    margin: -3px; /* Se expande justo el tamaño del borde para evitar líneas finas */
+    border-radius: inherit; /* Hereda los bordes redondeados */
+
+    /* 5. El gradiente animado que se verá a través del borde transparente */
     background: conic-gradient(
+        from 0deg, 
         #ff0000, #ff7f00, #ffff00, #00ff00, 
         #0000ff, #4b0082, #8b00ff, #ff0000
     );
-    z-index: -1;
     animation: rotate 4s linear infinite;
 }
+/* --- FIN DE LA SECCIÓN DEL BORDE --- */
+
 
 @keyframes rotate {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
-/* --- Fin del borde animado --- */
-
 
 h1 {
     text-align: center;
@@ -128,15 +136,8 @@ li {
     animation: fadeIn 0.5s ease;
 }
 
-.product-name {
-    flex-grow: 1;
-}
-
-.product-price {
-    font-weight: 600;
-    color: #4dc3ff; /* Un color que contrasta bien */
-    margin: 0 1em;
-}
+.product-name { flex-grow: 1; }
+.product-price { font-weight: 600; color: #4dc3ff; margin: 0 1em; }
 
 .delete-btn {
     background: transparent;
@@ -154,7 +155,6 @@ li {
     transform: scale(1.1);
 }
 
-/* Animación para eliminar item */
 li.fade-out {
     animation: fadeOut 0.5s ease forwards;
 }
