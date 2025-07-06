@@ -50,6 +50,12 @@ body {
     );
     animation: rotate 4s linear infinite;
 }
+
+/* No olvides la animación */
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 /* --- FIN DE LA SECCIÓN DEL BORDE --- */
 
 
