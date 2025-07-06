@@ -47,10 +47,13 @@ body {
         #ff0000, #ff7f00, #ffff00, #00ff00,
         #0000ff, #4b0082, #8b00ff, #ff0000
     );
-    animation: rotate 4s linear infinite;
-    filter: blur(15px); /* Esto crea el efecto de glow */
-    opacity: 0.8; /* Ajusta según intensidad deseada */
+    /* ❌ Elimina esta línea si no quieres rotación */
+    /* animation: rotate 4s linear infinite; */
+
+    filter: blur(15px); /* Glow */
+    opacity: 0.8;
 }
+
 
 
 /* --- FIN DE LA SECCIÓN DEL BORDE --- */
