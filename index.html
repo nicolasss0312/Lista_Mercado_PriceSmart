@@ -1,51 +1,72 @@
+<!--
+Este archivo HTML representa una aplicación sencilla de lista de mercado.
+Incluye campos para agregar productos, cantidad, precio y una foto opcional.
+Muestra el total de productos y el costo total, y utiliza un archivo CSS para estilos y un JS para la lógica.
+-->
 <!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5 -->
 <html lang="es">
+<!-- El idioma del documento es español -->
 <head>
+    <!-- Metadatos del documento -->
     <meta charset="UTF-8">
+    <!-- Configuración para que sea responsive en dispositivos móviles -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🛒 Lista de Mercado</title>
-    
+
+    <!-- Preconexión a Google Fonts para mejorar el rendimiento de carga de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fuente Poppins desde Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Archivo de estilos CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
+        <!-- Título principal de la aplicación -->
         <h1>Mi Lista de Mercado</h1>
 
+        <!-- Grupo de formulario para el nombre del producto -->
         <div class="form-group">
             <label for="producto">Producto:</label>
             <input type="text" id="producto" placeholder="Ej: Jamón">
         </div>
 
+        <!-- Grupo de formulario para la cantidad -->
         <div class="form-group">
             <label for="cantidad">Cantidad:</label>
             <input type="number" id="cantidad" value="1" min="1">
         </div>
 
+        <!-- Grupo de formulario para el precio por unidad -->
         <div class="form-group">
             <label for="precio">Precio por unidad (COP):</label>
             <input type="text" id="precio" inputmode="numeric" placeholder="Ej: 5.000">
         </div>
         
+        <!-- Grupo de formulario para la foto del producto (opcional) -->
         <div class="form-group">
             <label for="foto">Foto del producto (opcional):</label>
             <input type="file" id="foto" accept="image/*">
         </div>
 
+        <!-- Botón para agregar el producto a la lista -->
         <button id="btn-agregar">Agregar Producto</button>
 
+        <!-- Resumen de productos y total -->
         <div class="summary">
              <h2>Productos: <span id="contador-productos">0</span></h2>
              <h2>Total: <span id="total">$0</span></h2>
         </div>
        
+        <!-- Lista donde se mostrarán los productos agregados -->
         <ul id="lista-productos">
             </ul>
     </div>
 
+    <!-- Inclusión del archivo JavaScript para la lógica de la app -->
     <script src="app.js"></script>
 </body>
 </html>
